@@ -19,8 +19,11 @@ func main() {
 	file.SetNext(db)
 
 	std.Message(0, "this will be printed only in std, it is a DEBUG message")
+	fmt.Println()
 	std.Message(1, "this will be printed in std and in file, it is a WARNING message")
+	fmt.Println()
 	std.Message(2, "this will be printed in std, in file and wil be saved in database, it is an ERROR message")
+	fmt.Println()
 }
 
 // first class in chain - stdout logger
