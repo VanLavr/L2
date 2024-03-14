@@ -54,7 +54,7 @@ func (s *StdoutLogger) writeMessage(msg string) {
 	fmt.Printf("from stdout logger: %d: %s\n", s.level, msg)
 }
 
-// next is database logger
+// next is database logger (has an extra method - saving log in database)
 type DBLogger struct {
 	level int // 0 - debug, 1 - warning, 2 - error
 	next  Logger
@@ -64,25 +64,31 @@ func NewDBLogger(l int) Logger {
 	return &DBLogger{level: l}
 }
 
-func (s *DBLogger) SetNext(nextLogger Logger) {
-	s.next = nextLogger
+func (d *DBLogger) SetNext(nextLogger Logger) {
+	d.next = nextLogger
 }
 
-func (s *DBLogger) Message(level int, msg string) {
-	if level <= s.level {
-		s.writeMessage(msg)
+func (d *DBLogger) Message(level int, msg string) {
+	if level <= d.level {
+		d.writeMessage(msg)
+		d.saveInDataBase(msg)
 	} else {
-		s.writeMessage(msg)
-		if s.next != nil {
-			s.next.Message(level, msg)
+		d.writeMessage(msg)
+		d.saveInDataBase(msg)
+		if d.next != nil {
+			d.next.Message(level, msg)
 		} else {
 			fmt.Println("ERR: no next logger was declared")
 		}
 	}
 }
 
-func (s *DBLogger) writeMessage(msg string) {
-	fmt.Printf("from db logger (saving this log in database): %d: %s\n", s.level, msg)
+func (d *DBLogger) writeMessage(msg string) {
+	fmt.Printf("from db logger: %d: %s\n", d.level, msg)
+}
+
+func (d *DBLogger) saveInDataBase(msg string) {
+	fmt.Printf("saving this log in database (%s)\n", msg)
 }
 
 // next is file logger
@@ -99,19 +105,25 @@ func (s *FileLogger) SetNext(nextLogger Logger) {
 	s.next = nextLogger
 }
 
-func (s *FileLogger) Message(level int, msg string) {
-	if level <= s.level {
-		s.writeMessage(msg)
+func (f *FileLogger) Message(level int, msg string) {
+	if level <= f.level {
+		f.writeMessage(msg)
+		f.writeToFile(msg)
 	} else {
-		s.writeMessage(msg)
-		if s.next != nil {
-			s.next.Message(level, msg)
+		f.writeMessage(msg)
+		f.writeToFile(msg)
+		if f.next != nil {
+			f.next.Message(level, msg)
 		} else {
 			fmt.Println("ERR: no next logger was declared")
 		}
 	}
 }
 
-func (s *FileLogger) writeMessage(msg string) {
-	fmt.Printf("from file logger (writing this log in file): %d: %s\n", s.level, msg)
+func (f *FileLogger) writeMessage(msg string) {
+	fmt.Printf("from file logger: %d: %s\n", f.level, msg)
+}
+
+func (f *FileLogger) writeToFile(msg string) {
+	fmt.Printf("writing this log to a file (%s)\n", msg)
 }
