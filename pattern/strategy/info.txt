@@ -1,0 +1,16 @@
+Поведенческий
+
+Стратегия — это поведенческий паттерн проектирования, который определяет семейство схожих алгоритмов и помещает каждый из них в собственный класс, 
+после чего алгоритмы можно взаимозаменять прямо во время исполнения программы.
+
+Мост, Стратегия и Состояние (а также слегка и Адаптер) имеют схожие структуры классов — все они построены на принципе «композиции», 
+то есть делегирования работы другим объектам. Тем не менее, они отличаются тем, что решают разные проблемы. 
+Помните, что паттерны — это не только рецепт построения кода определённым образом, но и описание проблем, которые привели к данному решению.
+
+examples:
+For instance, a class that performs validation on incoming data may use the strategy pattern to select a validation algorithm depending on the type of data, 
+the source of the data, user choice, or other discriminating factors. 
+These factors are not known until run-time and may require radically different validation to be performed. The validation algorithms (strategies), 
+encapsulated separately from the validating object, 
+may be used by other validating objects in different areas of the system (or even different systems) without code duplication. 
+
