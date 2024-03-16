@@ -11,14 +11,14 @@ import (
 var errInvalidString = errors.New("provided string is invalid")
 
 func main() {
-	res, err := UnpackString("")
+	res, err := unpackString("")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(res)
 }
 
-func UnpackString(s string) (string, error) {
+func unpackString(s string) (string, error) {
 	var result string
 
 	runes := []rune(s)

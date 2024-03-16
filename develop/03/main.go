@@ -50,7 +50,7 @@ func main() {
 
 	// handle -u
 	if uniqueRequired {
-		lines = CreateUnique(lines)
+		lines = createUnique(lines)
 	}
 
 	// handle -n and -k
@@ -70,12 +70,11 @@ func main() {
 				fmt.Println(line)
 			}
 			return
-		} else {
-			for i := range lines {
-				fmt.Println(lines[len(lines)-i-1])
-			}
-			return
 		}
+		for i := range lines {
+			fmt.Println(lines[len(lines)-i-1])
+		}
+		return
 	}
 
 	// handle -k
@@ -97,7 +96,7 @@ func main() {
 	}
 }
 
-func CreateUnique(lines []string) []string {
+func createUnique(lines []string) []string {
 	result := []string{}
 	unique := make(map[string]struct{}, len(lines))
 

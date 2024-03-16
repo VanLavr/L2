@@ -41,7 +41,7 @@ func TestUnpackString(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := UnpackString(tc.toUnpack)
+		got, err := unpackString(tc.toUnpack)
 		if got != tc.expectedResult || err != tc.expectedError {
 			t.Errorf("source string: %s, expected result: %s, expected error: %v\ngot result: %s, got error: %v", tc.toUnpack, tc.expectedResult, tc.expectedError, got, err)
 		}
