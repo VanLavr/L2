@@ -19,8 +19,8 @@ stages:
 3) fixed                                                                     +
 4) inverted (OR below, cannot stack inverted and before or after or context) +
 5) after                                                                     +
-6) before
-7) context
+6) before                                                                    +
+7) context                                                                   +
 
 */
 
@@ -42,9 +42,9 @@ func main() {
 		lineNum    bool
 	)
 
-	flag.IntVar(&after, "A", 0, "print N strings after match")                   //
-	flag.IntVar(&before, "B", 0, "print N strings before match")                 //
-	flag.IntVar(&context, "C", 0, "print -+N strings around match")              //
+	flag.IntVar(&after, "A", 0, "print N strings after match")                   // +
+	flag.IntVar(&before, "B", 0, "print N strings before match")                 // +
+	flag.IntVar(&context, "C", 0, "print -+N strings around match")              // +
 	flag.BoolVar(&count, "c", false, "print number of lines within the matches") // +
 	flag.BoolVar(&ignoreCase, "i", false, "ignore case")                         // +
 	flag.BoolVar(&invert, "V", false, "find all the lines without matches")      // +
