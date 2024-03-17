@@ -133,14 +133,12 @@ func fixed(lines []withLineNumbers, fix, ignorecase, invert bool, after, before,
 
 		if invert {
 			inverted(lines, matches)
-		} else if after > 0 && !ignorecase {
+		} else if after > 0 {
 			afterLine(lines, matches, after)
-		} else if after > 0 && ignorecase {
-			afterLine(lines, matches, after)
-		} else if before > 0 && !ignorecase {
+		} else if before > 0 {
 			beforeLine(lines, matches, before)
-		} else if before > 0 && ignorecase {
-			beforeLine(lines, matches, before)
+		} else if context > 0 {
+			aroundLine(lines, matches, context)
 		} else {
 			printLine(lines, matches)
 		}
@@ -165,14 +163,12 @@ func fixed(lines []withLineNumbers, fix, ignorecase, invert bool, after, before,
 
 	if invert {
 		inverted(lines, matches)
-	} else if after > 0 && !ignorecase {
+	} else if after > 0 {
 		afterLine(lines, matches, after)
-	} else if after > 0 && ignorecase {
-		afterLine(lines, matches, after)
-	} else if before > 0 && !ignorecase {
+	} else if before > 0 {
 		beforeLine(lines, matches, before)
-	} else if before > 0 && ignorecase {
-		beforeLine(lines, matches, before)
+	} else if context > 0 {
+		aroundLine(lines, matches, context)
 	} else {
 		printLine(lines, matches)
 	}
@@ -235,6 +231,33 @@ func beforeLine(lines []withLineNumbers, matches []string, before int) {
 			for k := i - before; k <= i; k++ {
 				if k < 0 {
 					k = 0
+				}
+				if lines[k].LineNumber > 0 {
+					fmt.Printf("%d: %s\n", lines[k].LineNumber, lines[k].Line)
+				} else {
+					fmt.Println(lines[k].Line)
+				}
+			}
+			fmt.Println("...")
+			fmt.Println()
+			j++
+			if j > len(matches)-1 {
+				break
+			}
+		}
+	}
+}
+
+func aroundLine(lines []withLineNumbers, matches []string, around int) {
+	j := 0
+	for i := 0; i < len(lines); i++ {
+		if lines[i].Line == matches[j] {
+			for k := i - around; k <= i+around; k++ {
+				if k < 0 {
+					k = 0
+				}
+				if k > len(lines)-1 {
+					break
 				}
 				if lines[k].LineNumber > 0 {
 					fmt.Printf("%d: %s\n", lines[k].LineNumber, lines[k].Line)
