@@ -24,6 +24,7 @@ func (e *eventHandler) HandleCreateEvent(w http.ResponseWriter, r *http.Request)
 	event, err := e.unmarshalBody(r)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -31,6 +32,7 @@ func (e *eventHandler) HandleCreateEvent(w http.ResponseWriter, r *http.Request)
 	modelEvent, err := e.validateEvent(event)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -38,6 +40,7 @@ func (e *eventHandler) HandleCreateEvent(w http.ResponseWriter, r *http.Request)
 	id, err := e.scheduler.CreateEvent(modelEvent)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -45,6 +48,7 @@ func (e *eventHandler) HandleCreateEvent(w http.ResponseWriter, r *http.Request)
 	conent, err := e.marshallPostResponse(id)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write(content)
 		return
 	}
@@ -56,6 +60,7 @@ func (e *eventHandler) HandleUpdateEvent(w http.ResponseWriter, r *http.Request)
 	event, err := e.unmarshalBody(r)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -63,6 +68,7 @@ func (e *eventHandler) HandleUpdateEvent(w http.ResponseWriter, r *http.Request)
 	modelEvent, err := e.validateEvent(event)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -70,6 +76,7 @@ func (e *eventHandler) HandleUpdateEvent(w http.ResponseWriter, r *http.Request)
 	id, err := e.scheduler.UpdateEvent(modelEvent)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -77,6 +84,7 @@ func (e *eventHandler) HandleUpdateEvent(w http.ResponseWriter, r *http.Request)
 	conent, err := e.marshallPostResponse(id)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write(content)
 		return
 	}
@@ -88,6 +96,7 @@ func (e *eventHandler) HandleDeleteEvent(w http.ResponseWriter, r *http.Request)
 	event, err := e.unmarshalBody(r)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -95,6 +104,7 @@ func (e *eventHandler) HandleDeleteEvent(w http.ResponseWriter, r *http.Request)
 	id, err := e.scheduler.DeleteEvent(event.ID)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -102,6 +112,7 @@ func (e *eventHandler) HandleDeleteEvent(w http.ResponseWriter, r *http.Request)
 	conent, err := e.marshallPostResponse(id)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write(content)
 		return
 	}
@@ -115,6 +126,7 @@ func (e *eventHandler) HandleGetForDay(w http.ResponseWriter, r *http.Request) {
 	date, err := e.validator.ValidateDate(day)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -123,6 +135,7 @@ func (e *eventHandler) HandleGetForDay(w http.ResponseWriter, r *http.Request) {
 	content, err := e.marshallGetResponse(events)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -136,6 +149,7 @@ func (e *eventHandler) HandleGetForWeek(w http.ResponseWriter, r *http.Request) 
 	date, err := e.validator.ValidateDate(day)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -144,6 +158,7 @@ func (e *eventHandler) HandleGetForWeek(w http.ResponseWriter, r *http.Request) 
 	content, err := e.marshallGetResponse(events)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -157,6 +172,7 @@ func (e *eventHandler) HandleGetForMonth(w http.ResponseWriter, r *http.Request)
 	date, err := e.validator.ValidateDate(day)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
@@ -165,6 +181,7 @@ func (e *eventHandler) HandleGetForMonth(w http.ResponseWriter, r *http.Request)
 	content, err := e.marshallGetResponse(events)
 	if err != nil {
 		content := e.marshallErrorResponse(err)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write(content)
 		return
 	}
