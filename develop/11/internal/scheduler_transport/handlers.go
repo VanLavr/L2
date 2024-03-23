@@ -2,7 +2,6 @@ package schedulertransport
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -190,8 +189,7 @@ type response struct {
 func (e *eventHandler) unmarshalBody(r *http.Request) (dto, error) {
 	var event dto
 	if err := json.NewDecoder(r.Body).Decode(&event); err != nil {
-		fmt.Println(err, "unmBody")
-		return dto{}, errors.ErrInternal
+		return dto{}, errors.ErrInvalidData
 	}
 
 	return event, nil
@@ -200,7 +198,6 @@ func (e *eventHandler) unmarshalBody(r *http.Request) (dto, error) {
 func (e *eventHandler) marshallGetResponse(resp []models.Event) ([]byte, error) {
 	r, err := json.Marshal(response{Content: resp})
 	if err != nil {
-		fmt.Println(err, "marshGet")
 		return nil, errors.ErrInternal
 	}
 
@@ -210,7 +207,6 @@ func (e *eventHandler) marshallGetResponse(resp []models.Event) ([]byte, error) 
 func (e *eventHandler) marshallPostResponse(id int) ([]byte, error) {
 	resp, err := json.Marshal(response{Content: id})
 	if err != nil {
-		fmt.Println(err, "marshPost")
 		return nil, errors.ErrInternal
 	}
 

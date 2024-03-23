@@ -1,7 +1,6 @@
 package schedulerrepo
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -65,7 +64,6 @@ func (r *repository) Fetch(day time.Time, period time.Time) []models.Event {
 	defer r.RUnlock()
 
 	var result []models.Event
-	fmt.Println(r.events)
 
 	for _, event := range r.events {
 		if event.Date.UnixNano() >= day.UnixNano() && event.Date.UnixNano() <= period.UnixNano() {
