@@ -20,7 +20,7 @@ func NewLogger() *Logger {
 }
 
 func (l *Logger) setParameters(params ...string) {
-	l.params = slog.Group("request:", params)
+	l.params = slog.Group("request", "params", params)
 }
 
 // LogScheduleAction is a basic handler logging.

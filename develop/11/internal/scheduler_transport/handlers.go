@@ -17,8 +17,8 @@ type eventHandler struct {
 	validator *middlewares.EventValidator
 }
 
-func newEventHandler(usecase scheduler.Scheduler) *eventHandler {
-	return &eventHandler{scheduler: usecase}
+func newEventHandler(usecase scheduler.Scheduler, validator *middlewares.EventValidator) *eventHandler {
+	return &eventHandler{scheduler: usecase, validator: validator}
 }
 
 func (e *eventHandler) HandleCreateEvent(w http.ResponseWriter, r *http.Request) {
