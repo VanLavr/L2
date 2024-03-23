@@ -6,23 +6,23 @@ import (
 	"github.com/VanLavr/L2/develop/11/internal/pkg/errors"
 )
 
-// Validator (layout = "2006-01-02")
-type Validator struct {
+// EventValidator (layout = "2006-01-02")
+type EventValidator struct {
 	layout string
 }
 
 // NewValidator is a constructor for validator
-func NewValidator(layout string) *Validator {
-	return &Validator{layout: layout}
+func NewValidator(layout string) *EventValidator {
+	return &EventValidator{layout: layout}
 }
 
 // ValidateDate stands for validating date
-func (v *Validator) ValidateDate(date string) (time.Time, error) {
+func (v *EventValidator) ValidateDate(date string) (time.Time, error) {
 	return time.Parse(v.layout, date)
 }
 
 // ValidateEventName stands for validating name of the event
-func (v *Validator) ValidateEventName(name string) error {
+func (v *EventValidator) ValidateEventName(name string) error {
 	if name == "" {
 		return errors.ErrProvidedEventNameIsInvalid
 	}
